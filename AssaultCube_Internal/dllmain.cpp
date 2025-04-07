@@ -39,8 +39,9 @@ DWORD WINAPI HackThread(HMODULE hModule)
    
     uintptr_t ammoAddr = mem::FindDMAAddy(moduleBase + 0x18AC00, { 0x364, 0x14, 0x0 });
     uintptr_t entHPaddr = mem::FindDMAAddy(moduleBase + 0x18AC04, { 0x04, o.health });  //THIS SOMEHOW DOES IT I WAS NOT STEPPING THROUGH THE OFFSETS CORRECTLY FINALLY
+    uintptr_t entPosaddr = mem::FindDMAAddy(moduleBase + 0x18AC04, { 0x04, o.position });
  
-    
+    entity elist[32]{};
     
 
 
@@ -53,20 +54,27 @@ DWORD WINAPI HackThread(HMODULE hModule)
         //Vec3* ViewAngle = (Vec3*)(*local.localPlayerPtr + o.viewAngle);    //getting the view angles 
         //Vec3* Position = (Vec3*)(*local.localPlayerPtr + o.position);
 
+        //maybe i should be keeping this in a global.h file and marking them extern so they can be interacted from any file
+
         local.position = (Vec3*)(*local.localPlayerPtr + o.position);
         local.viewAngles = (Vec3*)(*local.localPlayerPtr + o.viewAngle);   
-        opponent.position = (Vec3*)(*opponent.localPlayerPtr + o.position);
+        opponent.position = (Vec3*)(entPosaddr);
         opponent.viewAngles = (Vec3*)(*opponent.localPlayerPtr + o.viewAngle);
         local.health = *(int*)(*local.localPlayerPtr + o.health);
         opponent.health = *(int*)(entHPaddr);
+        
+        
        
         
         system("cls");
         std::cout << "[controls]" <<
-            "\nF1 = Health\nF2 = Ammo_crashingXD\nF3 = SniperRapidFire\nF4 = RCS\nF5 = Tele test\nF6 = Aimbot\nInsert = Close\n\n" << "Ent2 Info: \n\n" << local.health << ' ' << opponent.health;
+            "\nF1 = Health\nF2 = Ammo_crashingXD\nF3 = SniperRapidFire\nF4 = RCS\nF5 = Tele test\nF6 = Aimbot\nInsert = Close\n\n" << "Ent2 Info: \n\n" 
+            << opponent.position->x << ' ' << opponent.position->y << ' ' << opponent.position->z << ' HP' << opponent.health;
         
         
-
+        //std::cout << "\n\n[][][]\n\nVecMath\n" << "Vec3Subtraction: ";
+        //calcAngleA(local.position, opponent.position, *local.viewAngles);
+        //calcAngleB(local.position, opponent.position);
 
         
 
@@ -148,8 +156,11 @@ DWORD WINAPI HackThread(HMODULE hModule)
             }
             if (aim::b_Aimbot)
             {
-                getEntList();
-                aim::b_Aimbot = !aim::b_Aimbot;
+                //getEntList(local.position, *local.viewAngles);
+                //entlist::init();
+                std::cout << "----------------------------------------\n\n\n---------------------------------------\n\n-------------------------------";
+                lockOn(local.position, opponent.position, *local.viewAngles);
+               // aim::b_Aimbot = !aim::b_Aimbot;
                 std::cout << "\nEnd of AimbotCall";
                 
             }
@@ -168,9 +179,11 @@ DWORD WINAPI HackThread(HMODULE hModule)
         
         
         
+        
 
     }
 
+    
     
 
     //continuous write/freeze

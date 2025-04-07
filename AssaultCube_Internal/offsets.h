@@ -1,6 +1,8 @@
 #pragma once
 #include <libloaderapi.h>
 
+
+
 namespace {
 	namespace aim
 	{
@@ -32,6 +34,33 @@ namespace {
 struct Vec3 {
 public:
 	float x, y, z;
+
+	constexpr const Vec3& operator-(const Vec3& other) const noexcept
+	{
+		return Vec3{ x - other.x, y - other.y, z - other.z };
+	}
+
+	constexpr const Vec3& operator+(const Vec3& other) const noexcept
+	{
+		return Vec3{ x + other.x, y + other.y, z + other.z };
+	}
+
+	constexpr const Vec3& operator/(const float factor) const noexcept
+	{
+		return Vec3{ x / factor, y / factor, z / factor };
+	}
+
+	constexpr const Vec3& operator*(const float factor) const noexcept
+	{
+		return Vec3{ x * factor, y * factor, z * factor };
+	}
+
+	
+};
+
+struct Vec2 {
+public:
+	float x, y;
 };
 
 struct offsets {
@@ -55,6 +84,7 @@ public:
 	uintptr_t* localPlayerPtr{ nullptr };
 	Vec3* viewAngles{};	// Vec3 but roll is irrelevant
 	Vec3* position{};
+	float dist{};
 	int health{};
 };
 
@@ -64,4 +94,12 @@ public:
 	const uintptr_t BaseMod{ (uintptr_t)GetModuleHandle(L"ac_client.exe") };
 
 };
+
+struct entitylist {
+	 entity* players[64];
+};
+
+//extern entitylist* entListPtr = (entitylist*)(GetModuleHandle(L"ac_client.exe") + 0x0018AC04);
+
+
 

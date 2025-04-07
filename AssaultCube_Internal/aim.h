@@ -2,6 +2,7 @@
 #pragma once
 #include "offsets.h"
 #include "mem.h"
+#include "math.h"
 
 int GetDist(Vec3 local, Vec3 enemy)
 {
@@ -35,4 +36,12 @@ int GetDist(Vec3 local, Vec3 enemy)
 	std::cout << "\nMagnitude = " << sqrt(finalVal) << " or sqrt(" << finalVal << ")\n\n";
 #endif
 	return sqrt(finalVal);
+}
+
+void lockOn(Vec3* local, Vec3* target, Vec3& viewAngles)
+{
+	//std::cout << "lockOn() viewangles[PRE]: " << viewAngles.x << " " << viewAngles.y << " " << viewAngles.z << " \n";
+	viewAngles = calcAngleB(local, target);
+	//std::cout << "lockOn() viewangles[POST]: " << viewAngles.x << " " << viewAngles.y << " " << viewAngles.z << " \n";
+	std::cout << "\naimbotted\n";
 }
