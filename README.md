@@ -12,6 +12,11 @@ ent list
 -
 simply loops through entities (will add to loop through amt of players) 
 
-aimbot  -adding
+aimbot 
 -
 locks on to nearest enemy
+
+
+legit a mess, but ive grasped the basics of an internal cheat.
+
+I doubt any functioning human will gain any knowledge from reading this horrorCode™
