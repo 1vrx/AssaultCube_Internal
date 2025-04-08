@@ -1,4 +1,8 @@
-# AC internal
+gng gng ts is a horrorCode™ classic... just sharing how i can create messy code and make absolute rubbish happen....
+this was all done with no tutorials (other than aimbot math because my math wasnt working) but everything else was reversed myself and required no tutorials.
+
+
+#AC internal
 
 cli menu
 - 
